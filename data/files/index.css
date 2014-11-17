@@ -1,0 +1,172 @@
+
+
+body {
+	background-image: url("back.jpeg");
+   background-attachment: fixed;
+/*   background-attachment: fixed; */
+	background-position: center 0;
+	background-size: cover;
+}
+
+#exit-button {
+   position: absolute !important;
+   top: 5px;
+   right: 5px;
+   height: 40px;
+   width: 40px;
+}
+#logo {
+   position: absolute !important;
+   top: 10px;
+   left: 10px;
+   height: 80px;
+   width: 80px;
+}
+
+.container {
+   position: relative;
+   margin : auto;
+   background-color: rgba(255,255,255,0.85);
+   padding:5px;
+   padding-bottom:5px;
+   box-shadow: -5px 5px 20px 5px #656565;
+   width:920px;
+   margin-top: 25px;
+   margin-bottom: 20px;
+}
+
+
+h1 {
+   color: rgb(0,0,255);
+   margin:30px;
+   margin-left: 110px;
+   font-family: "Courier New", Courier, monospace;
+}
+
+h2 {
+   text-align: center;
+}
+
+h5.errorsub {
+   text-align: center;
+   color: green;
+   font-size: 10pt;
+   padding:0px;
+   margin:0px;
+}
+
+
+th,td {
+   padding: 10px;
+   text-align:center;
+}
+table {  width: 100%; }
+#cont2 th.col1 {  width:56%;  }
+#cont2 th.col2 {  width:12%;  }
+#cont2 th.col3 {  width:12%;  }
+#cont2 th.col4 {
+   width:10%;
+   padding: 4px;
+}
+button {
+   padding: 2px;
+   width:100%;
+   height:100%;
+}
+
+.inputcell {
+   padding:2px;
+}
+
+input {
+   margin:2px;
+}
+
+#name {
+   width: 88%;
+}
+#episode, #season{
+   width:25px;
+}
+
+
+.container h2 {
+   margin:2px;
+   padding:0px;
+}
+.container h5 {
+   margin:0px;
+   padding:0px;
+   margin-bottom:15px;
+}
+
+
+.results {
+   width:81px;
+   table-layout: fixed;
+}
+.results th {
+   margin:0px;
+   padding:0px;
+}
+.results tr {
+   margin:0px;
+   padding:0px;
+}
+.results td {
+   text-align:center;
+   padding:0px;
+}
+
+.resultsTorrent .col0 {  width:65px;  }
+.resultsTorrent .col1 {  width:100px; }
+.resultsTorrent .col2 {  width:705px; }
+.resultsTorrent .col3 {  width:40px;  }
+
+.resultsSubtitles .col0 { width:800px;  }
+
+
+.resultsSubtitle .col0 {  width:65px;  }
+.resultsSubtitle .col1 {  width:100px; }
+.resultsSubtitle .col2 {  width:705px; }
+.resultsSubtitle .col3 {  width:40px;  }
+
+
+#statusMsg {
+   visibility:hidden;
+   margin:0px;
+   padding:0px;
+}
+
+.hidden {  display:none;  }
+
+
+
+.chest {
+   width: 40px;
+   height: 40px;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes hideRes {
+   from {margin-top: 25px;}
+   to {margin-top: 2000px;}
+}
+
+/* Standard syntax */
+@keyframes hideRes {
+   from {margin-top: 25px;}
+   to {margin-top: 2000px;}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes showRes {
+   from {margin-top: 2000px;}
+   to {margin-top: 25px;}
+}
+
+/* Standard syntax */
+@keyframes showRes {
+   from {margin-top: 2000px;}
+   to {margin-top: 25px;}
+}

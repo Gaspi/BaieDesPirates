@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <meta name="author" content="Gaspi" />
+   <link href="index.css" rel="stylesheet" type="text/css">
+   <title>Baie des pirates</title>
+   <script src="main.js"></script>
+   <script src="search.js"></script>
+   <script src="subtitles.js"></script>
+</head>
+
+<body>
+
+<div class="container" id="cont1">
+   <img id="exit-button" src="exit.ico" onclick="exitRequest()">
+   <img id="logo" src="logo.png">
+   <h1 id="title">Bienvenue à la Baie des Pirates !</h1>
+</div>
+
+<div class="container" id="cont2">
+   <table id="searchTable">
+   <tr>
+      <th class="col1"> Nom de la série </th>
+      <th class="col2"> Episode </th>
+      <th class="col3"> Saison </th>
+      <th class="col4" rowspan="2"> <button id="go-button" type="button" onclick="searchRequest()"> A l'abordage !!! </button> </th>
+   </tr>
+   <tr>
+      <td class="inputcell"> <input id="name"    type="text" name="name">    </td>
+      <td class="inputcell"> <input id="episode" type="text" name="episode"> </td>
+      <td class="inputcell"> <input id="season"  type="text" name="season">  </td>
+      
+   </tr>
+   </table>
+   <h5 class="errorsub" id="statusMsg"> </h5>
+</div>
+
+
+</body>
+</html>
