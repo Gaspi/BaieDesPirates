@@ -11,29 +11,15 @@ import SocketServer
 from threading import Thread
 
 from requestHandler import *
+from PathManager    import *
 
-
-
-dataPath = 'data/'
-filePath = dataPath + 'files/'
 PORT = 8000
 
-
-index_url = "http://localhost:" + str(PORT) + "/index.html"
-
-fileMIMEs = dict()
-with open(dataPath + "files.txt") as allFiles:
-    f = None
-    for line in allFiles.read().split('\n'):
-        if len(line) > 0:
-            if f:
-                fileMIMEs[f] = line
-                f = None
-            else:
-                f = line
+base_url  = "http://localhost:" + str(PORT) + "/"
+index_url = base_url + "index.html"
 
 
-
+fileMIMEs = readFileMIMEs()
 
 keepRunning = True
 
@@ -84,6 +70,7 @@ class MyHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
         print self.path
         url = URLFromPath(self.path)
+        print url
         response = None
         if isFileURL(url['url']):
             self.send_response(200)
@@ -105,7 +92,7 @@ class MyHandler(SimpleHTTPRequestHandler):
             self.send_header("Content-type", "text/plain")
             response = handleSubtitlesRequest(url)
         else:
-            self.send_response(301)
+            self.send_response(308)
             self.send_header("Location", index_url )
             self.end_headers()
             print "URL Not Found: ", url

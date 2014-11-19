@@ -1,57 +1,56 @@
 
-function deleteAllResults() {
-   currentDiv = document.body.lastChild
-   while (currentDiv.id != "cont2" && currentDiv.id != "cont1") {
-      document.body.removeChild( currentDiv )
-      currentDiv = document.body.lastChild
+function PirateBay(lines) {
+   this.lines = lines;
+   this.requestCode     = parseInt(lines[0]);
+   this.pbOffset        = parseInt(lines[1]);
+   this.stOffset        = parseInt(lines[2]);
+   this.answerCode      = parseInt(lines[this.pbOffset+0]);
+   this.titleResults    =          lines[this.pbOffset+1];
+   this.numberResults   = parseInt(lines[this.pbOffset+2]);
+   this.stAnswerCode   = parseInt(lines[this.stOffset+0])
+   this.stTitleResults =          lines[this.stOffset+1]
+   this.stNumberResults= parseInt(lines[this.stOffset+2])
+};
+
+PirateBay.prototype.setErrmsg = function(errmsg) {
+   if (this.requestCode == 1) {
+      errmsg.textContent = "La saison doit etre un entier !";
+   } else if (this.requestCode == 2) {
+      errmsg.textContent = "L'épisode doit etre un entier !";
+   } else {
+      errmsg.textContent = "Erreur inconnue...";
    }
+   errmsg.style.color = 'red';
+   errmsg.style.visibility = "visible";
+}
+
+PirateBay.prototype.error = function(){
+   return (this.requestCode > 0);
 }
 
 
-function createTable(classe, a) {
-   res = document.createElement("table");
-   res.className = classe;
-   tr = document.createElement("tr");
-   for (var i = 0; i < a.length; i++) {
-      th = document.createElement("th");
-      th.className = "col" + i;
-      th.textContent = a[i];
-      tr.appendChild(th);
-   }
-   res.appendChild(tr);
-   return res;
-}
-
-function createTorrentTable() {
-   return createTable("results resultsTorrent", ["Score", "Taille", "Nom du fichier", "Lien"])
-}
-
-
-
-function fillTorrentResults(answerCode, titleResults, numberResults, mOffset, lines) {
-   cont = document.createElement("div");
-   cont.className = "container torrent";
-   titleH = document.createElement("h2");
-   statusH = document.createElement("h5");
-   statusH.className = "errorsub";
-   cont.appendChild(titleH);
-   cont.appendChild(statusH);
+PirateBay.prototype.getDiv = function(){
+   lines = this.lines
+   cont = stdDiv(this);
+   titleH  = cont.getElementsByTagName('h2')[0]
+   statusH = cont.getElementsByTagName('h5')[0]
+   
    res1 = createTorrentTable();
    
-   if (answerCode > 0) {
+   if ( this.answerCode > 0) {
       statusH.style.color = "red";
       titleH.textContent = "Aucun résultat...";
-      if (answerCode == 1) {
+      if ( this.answerCode == 1) {
          statusH.textContent = "Aucune requête envoyée à PirateBay";
-      } else if (answerCode == 2) {
+      } else if (this.answerCode == 2) {
          statusH.textContent = "Réponse erronée de PirateBay";
       }
    } else {
       statusH.style.color = "green"
-      statusH.textContent = "Réponse correcte de PirateBay: " + numberResults + " résultats.";
-      titleH.textContent = titleResults;
-      for (var i = 0; i < numberResults; i++) {
-         offset = mOffset + 3 + 5*i
+      statusH.textContent = "Réponse correcte de PirateBay: " + this.numberResults + " résultats.";
+      titleH.textContent = this.titleResults;
+      for (var i = 0; i < this.numberResults; i++) {
+         offset = this.pbOffset + 3 + 5*i
          tr = document.createElement('tr');
          
          td = document.createElement('td');
@@ -78,7 +77,7 @@ function fillTorrentResults(answerCode, titleResults, numberResults, mOffset, li
          a.href = lines[offset + 4];
          img = document.createElement('img');
          img.className = "chest";
-         img.src = "chest2.png";
+         img.src = "chest.png";
          a.appendChild(img);
          td.appendChild(a);
          tr.appendChild(td);
@@ -91,7 +90,14 @@ function fillTorrentResults(answerCode, titleResults, numberResults, mOffset, li
    return cont;
 }
 
-function addSubtitlesResults(answerCode, titleResults, numberResult, mOffset, row) {
+
+PirateBay.prototype.addSubtitleSelect = function() {
+   searchTable = document.getElementById("searchTable")
+   if (searchTable.rows.length > 2) {
+      searchTable.deleteRow(2)
+   }
+   row = searchTable.insertRow(2)
+   
    var td;
    var choices = document.createElement("select")
    choices.id = "subtitle-choice"
@@ -106,73 +112,26 @@ function addSubtitlesResults(answerCode, titleResults, numberResult, mOffset, ro
    button.textContent = "Sous-titres"
    button.onclick = function(){ subtitlesRequest() };
    
-   if (answerCode > 0) {
+   if ( this.stAnswerCode > 0) {
       statusH.style.color = "red"
-      if (answerCode == 1) {
+      if (this.stAnswerCode == 1) {
          statusH.textContent = "Aucune requête envoyée à TVSubtitles";
-      } else if (answerCode == 2) {
+      } else if (this.stAnswerCode == 2) {
          statusH.textContent = "Réponse erronée de TVSubtitles";
       }
    } else {
       statusH.style.color = "green";
-      statusH.innerHTML += "Réponse correcte de TVSubtitles<br>" + numberResult + " résultats.";
-      for (var i = 0; i < numberResults; i++) {
-         offset = mOffset + 3 + 2*i
+      statusH.innerHTML += "Réponse correcte de TVSubtitles<br>" + this.stNumberResults + " résultats.";
+      for (var i = 0; i < this.stNumberResults; i++) {
+         offset = this.stOffset + 3 + 2*i
          opt = document.createElement('option');
-         opt.text= lines[offset + 0]
-         opt.value = lines[offset + 1]
+         opt.text  = this.lines[offset + 0]
+         opt.value = this.lines[offset + 1]
          choices.appendChild(opt)
       }
    }
    td1.appendChild(choices)
    td2.appendChild( button )
-}
-
-function handleAnswer(lines) {
-   cont2 = document.getElementById("cont2")
-   requestCode = parseInt(lines[0])
-   pbOffset    = parseInt(lines[1])
-   stOffset    = parseInt(lines[2])
-   
-   deleteAllResults()
-   
-   errmsg = cont2.getElementsByClassName("errorsub")[0]
-   if (requestCode > 0) {
-      if (requestCode == 1) {
-         errmsg.textContent = "La saison doit etre un entier !";
-      } else if (requestCode == 2) {
-         errmsg.textContent = "L'épisode doit etre un entier !";
-      } else {
-         errmsg.textContent = "Erreur inconnue...";
-      }
-      errmsg.style.color = 'red';
-      errmsg.style.visibility = "visible";
-      titleH.textContent = "Requête incorrecte !"
-   } else {
-      errmsg.style.visibility = "hidden";
-      errmsg.textContent = "";
-      answerCode = parseInt(lines[pbOffset+0])
-      titleResults = lines[pbOffset+1]
-      numberResults = parseInt( lines[pbOffset+2] )
-      document.body.appendChild( fillTorrentResults(answerCode, titleResults, numberResults, pbOffset, lines) )
-      
-      answerCode = parseInt(lines[stOffset+0])
-      titleResults = lines[stOffset+1]
-      numberResults = parseInt( lines[stOffset+2] )
-      searchTable = document.getElementById("searchTable")
-      if (searchTable.rows.length > 2) {
-         searchTable.deleteRow(2)
-      }
-      newRow = searchTable.insertRow(2)
-      addSubtitlesResults(answerCode, titleResults, numberResults, stOffset, newRow)
-   }
-}
-
-function createRequest() {
-   name    = document.getElementById('name').value
-   episode = document.getElementById('episode').value
-   season  = document.getElementById('season').value
-   return "/req/?name=" + name + "&episode=" + episode + "&season=" + season
 }
 
 
@@ -199,4 +158,27 @@ function searchRequest() {
    errmsg.textContent = "Attente de réponse..."
 }
 
+
+
+function createRequest() {
+   name    = document.getElementById('name').value
+   episode = document.getElementById('episode').value
+   season  = document.getElementById('season').value
+   return "/req/?name=" + name + "&episode=" + episode + "&season=" + season
+}
+
+function handleAnswer(lines) {
+   piratebay = new PirateBay(lines);
+   var errmsg = document.getElementById("statusMsg");
+   if ( piratebay.error() ) {
+      piratebay.setErrmsg(errmsg)
+      titleH.textContent = "Requête incorrecte !"
+   } else {
+      errmsg.style.visibility = "hidden";
+      errmsg.textContent = "";
+      piratebay.addSubtitleSelect();
+      content.push( piratebay )
+      update();
+   }
+}
 

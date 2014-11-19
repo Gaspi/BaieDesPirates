@@ -1,5 +1,63 @@
+/*
+TODO:
+
+Change behavior:
+  -> Select subtitle:
+    -> foreach PirateBay result div, add a subtitle result with the right parameter underneath
+  -> Results from query update list of divs then divs are all reprinted
+
+Parameters should look and update the folder where subtitles are saved
+
+//*/
 
 
+content = []
+
+function deleteAllResults() {
+   currentDiv = document.body.lastChild
+   while (currentDiv.id != "cont2" && currentDiv.id != "cont1") {
+      document.body.removeChild( currentDiv )
+      currentDiv = document.body.lastChild
+   }
+}
+
+function addAllResults() {
+   for (var i = 0; i < content.length; i++) {
+      document.body.appendChild( content[i].getDiv() );
+   }
+}
+
+function update() {
+   deleteAllResults();
+   addAllResults();
+}
+
+function stdDiv(c) {
+   cont = document.createElement("div");
+   cont.className = "container";
+   
+   titleH = document.createElement("h2");
+   cont.appendChild(titleH);
+   
+   statusH = document.createElement("h5");
+   statusH.className = "errorsub";
+   cont.appendChild(statusH);
+   
+   close = document.createElement("img");
+   close.className = "exit-button";
+   close.src = "exit.png";
+   close.addEventListener("click", function() {deleteDiv(c);} )
+   cont.appendChild(close)
+   return cont;
+}
+
+function deleteDiv(d){
+   var i = content.indexOf(d);
+   if (i >= 0) {
+      content.splice(i,1);
+      update();
+   }
+}
 
 function exitRequest() {
    var xmlhttp;
@@ -41,3 +99,26 @@ document.onkeydown = function (evt) {
    }
 };
 
+
+// Basic table creation
+function createTable(classe, a) {
+   res = document.createElement("table");
+   res.className = classe;
+   tr = document.createElement("tr");
+   for (var i = 0; i < a.length; i++) {
+      th = document.createElement("th");
+      th.className = "col" + i;
+      th.textContent = a[i];
+      tr.appendChild(th);
+   }
+   res.appendChild(tr);
+   return res;
+}
+
+function createTorrentTable() {
+   return createTable("results resultsTorrent", ["Score", "Taille", "Nom du fichier", "Lien"])
+}
+
+function createSubtitleTable() {
+   return createTable("results resultsSubtitle", ["Score", "Taille", "Nom du fichier", "Lien"])
+}

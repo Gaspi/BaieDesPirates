@@ -1,22 +1,13 @@
-favicon.ico
-image/x-icon
-index.html
-text/html
-index.css
-text/css
-test.txt
-text/plain
-main.js
-application/javascript
-search.js
-application/javascript
-subtitles.js
-application/javascript
-back.jpeg
-image/jpeg
-exit.ico
-image/vnd.microsoft.icon
-logo.png
-image/png
-chest2.png
-image/png
+favicon.ico     image/x-icon
+logo.png        image/png
+anchor.png      image/png
+chest.png       image/png
+exit.png        image/png
+back.jpeg       image/jpeg
+index.html      text/html
+parameters.html text/html
+index.css       text/css
+main.js         application/javascript
+search.js       application/javascript
+subtitles.js    application/javascript
+exit.ico        image/vnd.microsoft.icon

@@ -1,5 +1,4 @@
 
-
 body {
 	background-image: url("back.jpeg");
    background-attachment: fixed;
@@ -8,13 +7,6 @@ body {
 	background-size: cover;
 }
 
-#exit-button {
-   position: absolute !important;
-   top: 5px;
-   right: 5px;
-   height: 40px;
-   width: 40px;
-}
 #logo {
    position: absolute !important;
    top: 10px;
@@ -22,6 +14,23 @@ body {
    height: 80px;
    width: 80px;
 }
+
+.exit-button {
+   position: absolute !important;
+   top: 5px;
+   right: 5px;
+}
+
+#parameters {
+   position: absolute !important;
+   top: 50px;
+   right: 5px;
+   width: 40px;
+}
+
+
+
+
 
 .container {
    position: relative;
@@ -84,6 +93,9 @@ input {
 
 #name {
    width: 88%;
+}
+#subtitle-choice {
+   width: 91%;
 }
 #episode, #season{
    width:25px;
